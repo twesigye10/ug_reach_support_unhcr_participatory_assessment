@@ -9,7 +9,7 @@ extract_other_data <- function(input_tool_data, input_survey, input_choices) {
   
   # get questions with other
   others_colnames <-  df_data %>% 
-    select(ends_with("_specify"), -contains("/")) %>% 
+    select(ends_with("_other"), ends_with("_specify"), -contains("/")) %>% 
     colnames()
   
   # data.frame for holding _other response data
@@ -17,15 +17,15 @@ extract_other_data <- function(input_tool_data, input_survey, input_choices) {
   
   for (cln in others_colnames) {
     
-    current_parent_qn = str_replace_all(string = cln, pattern = "_specify", replacement = "")
+    current_parent_qn = str_replace_all(string = cln, pattern = "_other|_specify", replacement = "")
     
     df_filtered_data <- df_data %>% 
       select(-contains("/")) %>% 
       select(uuid, start_date, progres_id, location, other_text = cln, current_value = current_parent_qn) %>% 
       filter(!is.na(other_text), !other_text %in% c(" ", "NA")) %>% 
       mutate( other_name = cln, 
-              int.my_current_val_extract = ifelse(str_detect(current_value, "\\bother\\b|^other_|_other$"), 
-                                                  str_extract_all(string = current_value, pattern = "\\bother\\b|^other_\\w+\\b|\\w+_other\\b"), 
+              int.my_current_val_extract = ifelse(str_detect(current_value, "\\bother\\b|\\bother_|_other\\b"), 
+                                                  str_extract_all(string = current_value, pattern = "\\bother\\b|\\bother_\\w+\\b|\\w+_other\\b"), 
                                                   current_value),
               value = "",
               parent_qn = current_parent_qn)
@@ -51,7 +51,7 @@ extract_other_data <- function(input_tool_data, input_survey, input_choices) {
   # join other responses with choice options based on list_name
   df_join_other_response_with_choices <- df_data_parent_qns %>% 
     left_join(df_grouped_choices, by = "list_name") %>% 
-    mutate(issue_id = "other_checks",
+    mutate(issue_id = "other_specify_checks",
            issue = "",
            checked_by = "",
            checked_date = as_date(today()),
@@ -59,7 +59,7 @@ extract_other_data <- function(input_tool_data, input_survey, input_choices) {
            reviewed = "",
            adjust_log = ""
     ) %>% 
-    filter(str_detect(string = current_value, pattern = "other\\b|[a-z]+._other\\b"))
+    filter(str_detect(string = current_value, pattern = "\\bother\\b|\\bother_|_other\\b"))
   
   # care for select_one and select_multiple (change_response, add_option, remove_option)
   output <- list()
