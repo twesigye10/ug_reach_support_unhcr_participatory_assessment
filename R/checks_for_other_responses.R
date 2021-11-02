@@ -19,6 +19,10 @@ extract_other_data <- function(input_tool_data, input_survey, input_choices) {
     
     current_parent_qn = str_replace_all(string = cln, pattern = "_other|_list_specify|_specify", replacement = "")
     
+    if (current_parent_qn == "educ_challenge"){
+      current_parent_qn = "education_challenges"
+    }
+    
     df_filtered_data <- df_data %>% 
       select(-contains("/")) %>% 
       select(uuid, start_date, progres_id, location, other_text = cln, current_value = current_parent_qn) %>% 
