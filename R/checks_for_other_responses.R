@@ -17,7 +17,7 @@ extract_other_data <- function(input_tool_data, input_survey, input_choices) {
   
   for (cln in others_colnames) {
     
-    current_parent_qn = str_replace_all(string = cln, pattern = "_other|_specify", replacement = "")
+    current_parent_qn = str_replace_all(string = cln, pattern = "_other|_list_specify|_specify", replacement = "")
     
     df_filtered_data <- df_data %>% 
       select(-contains("/")) %>% 
