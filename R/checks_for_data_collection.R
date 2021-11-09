@@ -34,3 +34,14 @@ check_qualitative_tool_data(input_tool_data_name = "PA_KI_key_stakeholders_quest
 
 check_qualitative_tool_data(input_tool_data_name = "PA_KI_key_stakeholders_questionnaire_October_2021_Kampala",
                             input_tool_name = "PA_KI_key_stakeholders_Tool_2021_Kampala")
+
+# specific_groups --------------------------------------------------------
+
+
+check_qualitative_tool_data(input_tool_data_name = "PA_KI_specific_groups_questionnaire_October_2021",
+                            input_tool_name = "PA_KI_specific_groups_Tool_2021")
+
+check_qualitative_tool_data(input_tool_data_name = "PA_KI_specific_groups_questionnaire_October_2021_Kampala",
+                            input_tool_name = "PA_KI_specific_groups_Tool_2021_Kampala")
+
+
