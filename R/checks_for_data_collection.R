@@ -44,4 +44,11 @@ check_qualitative_tool_data(input_tool_data_name = "PA_KI_specific_groups_questi
 check_qualitative_tool_data(input_tool_data_name = "PA_KI_specific_groups_questionnaire_October_2021_Kampala",
                             input_tool_name = "PA_KI_specific_groups_Tool_2021_Kampala")
 
+# other_minorities --------------------------------------------------------
 
+
+check_qualitative_tool_data(input_tool_data_name = "PA_KI_other_minorities_questionnaire_October_2021",
+                            input_tool_name = "PA_KI_other_minorities_Tool_2021")
+
+check_qualitative_tool_data(input_tool_data_name = "PA_KI_other_minorities_questionnaire_October_2021_Kampala",
+                            input_tool_name = "PA_KI_other_minorities_Tool_2021_Kampala")
