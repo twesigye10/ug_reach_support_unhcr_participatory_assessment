@@ -70,7 +70,7 @@ cleaning_log <- function(input_log_name, input_tool_data_name, input_tool_name) 
   # handling added responses after starting data collection -----------------
   
   df_final_cleaned_data <- kbo_cleaned$data %>% 
-    mutate(across(.cols = contains("/"), .fns = ~ifelse(is.na(.), FALSE, .)))
+    mutate(across(contains("/"), .fns = ~ifelse(is.na(.) & !is.na(!!sym(str_replace(string = cur_column(), pattern = "/\\w+", replacement = ""))), FALSE, .)))
   
   # write final modified data -----------------------------------------------------
   
