@@ -73,6 +73,27 @@ cleaning_log <- function(input_log_name, input_tool_data_name, input_tool_name) 
     select(-c(`id_type_refugee/unhcr_refugee_id`, `id_type_refugee/opm_attestation_card`)) %>% 
     mutate(across(any_of(vars_to_remove_from_data), .fns = ~na_if(., .)))
   
+  # handling added responses after starting data collection and added responses in the cleaning process-----------------
+  
+  sm_colnames <-  df_handle_pii %>% 
+    select(contains("/")) %>% 
+    colnames() %>% 
+    str_replace_all(pattern = "/.+", replacement = "") %>% 
+    unique()
+  
+  df_handle_sm_data <- df_handle_pii
+  
+  for (cur_sm_col in sm_colnames) {
+    df_updated_data <- df_handle_sm_data %>% 
+      mutate(
+        across(contains(paste0(cur_sm_col, "/")), .fns = ~ifelse(!is.na(!!sym(cur_sm_col)) & is.na(.) , FALSE, .)),
+        across(contains(paste0(cur_sm_col, "/")), .fns = ~ifelse(is.na(!!sym(cur_sm_col)), NA, .))
+      )
+    df_handle_sm_data <- df_updated_data
+  }
+  
+  df_final_cleaned_data <- df_handle_sm_data
+  
   # write final modified data -----------------------------------------------------
   
   write_csv(df_final_cleaned_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_data_", input_tool_data_name, ".csv"))
