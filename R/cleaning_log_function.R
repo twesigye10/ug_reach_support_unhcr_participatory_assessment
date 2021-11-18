@@ -1,6 +1,6 @@
 # using the cleaning log to clean the data
 
-cleaning_log <- function(input_log_name, input_tool_data_name, input_tool_name) {
+cleaning_log <- function(input_log_name, input_tool_data_name, input_tool_name, input_vars_to_remove_from_data) {
   # read data
   df_cleaning_log <- read_csv(paste0("inputs/", input_log_name, ".csv")) %>% 
     mutate(adjust_log = ifelse(is.na(adjust_log), "apply_suggested_change", adjust_log)) %>%
@@ -71,7 +71,7 @@ cleaning_log <- function(input_log_name, input_tool_data_name, input_tool_name) 
   
   df_handle_pii <- kbo_cleaned$data %>% 
     select(-c(`id_type_refugee/unhcr_refugee_id`, `id_type_refugee/opm_attestation_card`)) %>% 
-    mutate(across(any_of(vars_to_remove_from_data), .fns = ~na_if(., .)))
+    mutate(across(any_of(input_vars_to_remove_from_data), .fns = ~na_if(., .)))
   
   # handling added responses after starting data collection and added responses in the cleaning process-----------------
   
