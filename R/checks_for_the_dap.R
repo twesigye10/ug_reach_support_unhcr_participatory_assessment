@@ -65,27 +65,3 @@ get_indicators_for_dap("PA_KI_other_minorities_Tool_2021")
 
 get_indicators_for_dap("PA_KI_other_minorities_Tool_2021_Kampala")
 
-
-my_data <- tibble::tribble(
-                             ~variable, ~level, ~Split, ~disaggregation, ~subset.1, ~subset.2,
-                             "consent",   "II",  "all",              NA,        NA,        NA,
-                                 "sex",   "II",  "all",              NA,        NA,        NA,
-                                 "age",   "II",  "all",              NA,        NA,        NA,
-                         "nationality",   "II",  "all",              NA,        NA,        NA,
-                            "location",   "II",  "all",              NA,        NA,        NA,
-  "actual_location_match_registration",   "II",  "all",              NA,        NA,        NA,
-      "challenges_access_registration",   "II",  "all",              NA,        NA,        NA,
-            "malpractice_registration",   "II",  "all",              NA,        NA,        NA,
-    "challenges_access_legal_services",   "II",  "all",              NA,        NA,        NA,
-          "malpractice_legal_services",   "II",  "all",              NA,        NA,        NA,
-  "covid_impact_access_legal_services",   "II",  "all",              NA,        NA,        NA,
-            "challenges_access_police",   "II",  "all",              NA,        NA,        NA,
-                  "malpractice_police",   "II",  "all",              NA,        NA,        NA,
-                "rate_safety_security",   "II",  "all",              NA,  "gender",        NA,
-          "challenges_safety_security",   "II",  "all",              NA,  "gender",        NA,
-        "rate_safety_security_outside",   "II",  "all",              NA,  "gender",        NA
-  )
-
-my_data %>%
-  janitor::clean_names() %>% 
-  mutate(across(all_of(dap_vars_to_lower), .fns = ~str_to_lower(string = .)))
