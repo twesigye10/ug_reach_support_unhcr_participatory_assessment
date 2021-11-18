@@ -29,7 +29,7 @@ data_analysis <- function(input_clean_data_name, input_dap_name, input_vars_for_
   
   # split analysis by subset_1
   dap_all_subset <- dap %>% 
-    filter(split %in% c("All", "ref_only"), !is.na(subset_1))
+    filter(split %in% input_vars_for_split, !is.na(subset_1))
   
   # overall, subset_1
   
