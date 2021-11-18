@@ -1,0 +1,91 @@
+library(tidyverse)
+library(googlesheets4)
+
+# process dap -------------------------------------------------------
+dap_vars_to_lower <- c("split",	"disaggregation",	"subset_1",	"subset_2")
+
+df_host_dap <- read_sheet(ss = "1Q-kOf4SppwKRWVvYJ4PJNzRJmFwRsM_S625bkbut7tw", sheet = "DAP_host") %>% 
+  janitor::clean_names() %>% 
+  mutate(across(any_of(dap_vars_to_lower), .fns = ~str_to_lower(string = .))) %>% 
+  write_csv(file = "outputs/r_dap_host.csv", na = "NA")
+
+df_key_stakeholders_dap <- read_sheet(ss = "1Q-kOf4SppwKRWVvYJ4PJNzRJmFwRsM_S625bkbut7tw", sheet = "DAP_key_stakeholders")%>% 
+  janitor::clean_names() %>% 
+  mutate(across(any_of(dap_vars_to_lower), .fns = ~str_to_lower(string = .))) %>% 
+  write_csv(file = "outputs/r_dap_key_stakeholders.csv", na = "NA")
+
+df_other_minorities_dap <- read_sheet(ss = "1Q-kOf4SppwKRWVvYJ4PJNzRJmFwRsM_S625bkbut7tw", sheet = "DAP_minority")%>% 
+  janitor::clean_names() %>% 
+  mutate(across(any_of(dap_vars_to_lower), .fns = ~str_to_lower(string = .))) %>% 
+  write_csv(file = "outputs/r_dap_other_minorities.csv", na = "NA")
+
+df_specific_groups_dap <- read_sheet(ss = "1Q-kOf4SppwKRWVvYJ4PJNzRJmFwRsM_S625bkbut7tw", sheet = "DAP_specific_groups")%>% 
+  janitor::clean_names() %>% 
+  mutate(across(any_of(dap_vars_to_lower), .fns = ~str_to_lower(string = .))) %>% 
+  write_csv(file = "outputs/r_dap_specific_groups.csv", na = "NA")
+
+df_phone_survey_dap <- read_sheet(ss = "1Q-kOf4SppwKRWVvYJ4PJNzRJmFwRsM_S625bkbut7tw", sheet = "DAP_phone_surveys")%>% 
+  janitor::clean_names() %>% 
+  mutate(across(any_of(dap_vars_to_lower), .fns = ~str_to_lower(string = .))) %>% 
+  write_csv(file = "outputs/r_dap_phone_survey.csv", na = "NA")
+
+
+# check indicators --------------------------------------------------------
+get_indicators_for_dap <- function(input_tool_name) {
+  df_survey <- readxl::read_excel(paste0("inputs/", input_tool_name, ".xlsx"), sheet = "survey")
+  df_survey %>% 
+    filter(str_detect(string = type, pattern = "integer|select_one|select_multiple")) %>% 
+    pull(name)
+}
+
+# quantitative data -------------------------------------------------------
+
+get_indicators_for_dap("PA_KI_questionnaire_Tool_2021")
+get_indicators_for_dap("PA_KI_questionnaire_Tool_2021_Kampala")
+
+# qualitative data -------------------------------------------------------
+
+# host_community ----------------------------------------------------------
+get_indicators_for_dap("PA_KI_host_community_Tool_2021")
+
+get_indicators_for_dap("PA_KI_host_community_Tool_2021_Kampala")
+
+# key_stakeholders --------------------------------------------------------
+get_indicators_for_dap("PA_KI_key_stakeholders_Tool_2021")
+
+get_indicators_for_dap("PA_KI_key_stakeholders_Tool_2021_Kampala")
+
+# specific_groups --------------------------------------------------------
+get_indicators_for_dap("PA_KI_specific_groups_Tool_2021")
+
+get_indicators_for_dap("PA_KI_specific_groups_Tool_2021_Kampala")
+
+# other_minorities --------------------------------------------------------
+get_indicators_for_dap("PA_KI_other_minorities_Tool_2021")
+
+get_indicators_for_dap("PA_KI_other_minorities_Tool_2021_Kampala")
+
+
+my_data <- tibble::tribble(
+                             ~variable, ~level, ~Split, ~disaggregation, ~subset.1, ~subset.2,
+                             "consent",   "II",  "all",              NA,        NA,        NA,
+                                 "sex",   "II",  "all",              NA,        NA,        NA,
+                                 "age",   "II",  "all",              NA,        NA,        NA,
+                         "nationality",   "II",  "all",              NA,        NA,        NA,
+                            "location",   "II",  "all",              NA,        NA,        NA,
+  "actual_location_match_registration",   "II",  "all",              NA,        NA,        NA,
+      "challenges_access_registration",   "II",  "all",              NA,        NA,        NA,
+            "malpractice_registration",   "II",  "all",              NA,        NA,        NA,
+    "challenges_access_legal_services",   "II",  "all",              NA,        NA,        NA,
+          "malpractice_legal_services",   "II",  "all",              NA,        NA,        NA,
+  "covid_impact_access_legal_services",   "II",  "all",              NA,        NA,        NA,
+            "challenges_access_police",   "II",  "all",              NA,        NA,        NA,
+                  "malpractice_police",   "II",  "all",              NA,        NA,        NA,
+                "rate_safety_security",   "II",  "all",              NA,  "gender",        NA,
+          "challenges_safety_security",   "II",  "all",              NA,  "gender",        NA,
+        "rate_safety_security_outside",   "II",  "all",              NA,  "gender",        NA
+  )
+
+my_data %>%
+  janitor::clean_names() %>% 
+  mutate(across(all_of(dap_vars_to_lower), .fns = ~str_to_lower(string = .)))
