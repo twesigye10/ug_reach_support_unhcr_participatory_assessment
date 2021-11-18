@@ -1,7 +1,3 @@
-library(tidyverse)
-library(srvyr)
-library(janitor)
-library(glue)
 
 data_analysis <- function(input_clean_data_name, input_dap_name, input_vars_for_split) {
   # load data ---------------------------------------------------------------
