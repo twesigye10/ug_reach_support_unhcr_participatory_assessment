@@ -97,5 +97,6 @@ cleaning_log <- function(input_log_name, input_tool_data_name, input_tool_name, 
   # write final modified data -----------------------------------------------------
   
   write_csv(df_final_cleaned_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_data_", input_tool_data_name, ".csv"))
+  write_csv(df_final_cleaned_data, file = paste0("outputs/", "clean_data_", input_tool_data_name, ".csv"))
   
 }
