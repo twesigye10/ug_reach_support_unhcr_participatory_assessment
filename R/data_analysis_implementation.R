@@ -3,7 +3,7 @@ library(srvyr)
 library(janitor)
 library(glue)
 
-source("R/data_analysis_function.R")
+source("R/support_functions.R")
 
 # quantitative data -------------------------------------------------------
 data_analysis(input_clean_data_name = "PA_KI_questionnaire_September_2021_combined_checks",
