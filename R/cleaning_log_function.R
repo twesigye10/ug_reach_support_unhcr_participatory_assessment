@@ -8,13 +8,13 @@ cleaning_log <- function(input_log_name, input_tool_data_name, input_tool_name, 
     mutate(sheet = NA, index = NA, relevant = NA) %>% 
     select(uuid, type, name, value, issue_id, sheet, index, relevant, issue)
   
-  read_tool_data <- readxl::read_excel(path = paste0("inputs/", input_tool_data_name, ".xlsx"), col_types = c_types) %>% 
+  read_tool_data <- readxl::read_excel(path = paste0("inputs/", input_tool_data_name, ".xlsx")) %>% 
     filter(consent == "yes")
   
   df_raw_data <- tibble()
   
   # apply different filters to the data depending on the file name and columns in that file
-  if(str_detect(string = input_tool_data_name, pattern = "kampala") ){
+  if(str_detect(string = input_tool_data_name, pattern = fixed(pattern = "kampala", ignore_case = TRUE)) ){
     
     if("contact_information_location" %in% colnames(read_tool_data)){
       df_raw_data <- read_tool_data %>% 
@@ -24,8 +24,6 @@ cleaning_log <- function(input_log_name, input_tool_data_name, input_tool_name, 
         filter(location == "kampala")
     }
   } else{
-    df_raw_data <- read_tool_data %>% 
-      filter(contact_information_location != "kampala")
     
     if("contact_information_location" %in% colnames(read_tool_data)){
       df_raw_data <- read_tool_data %>% 
@@ -96,7 +94,6 @@ cleaning_log <- function(input_log_name, input_tool_data_name, input_tool_name, 
   # handling Personally Identifiable Information(PII) -----------------
   
   df_handle_pii <- kbo_cleaned$data %>% 
-    select(-c(`id_type_refugee/unhcr_refugee_id`, `id_type_refugee/opm_attestation_card`)) %>% 
     mutate(across(any_of(input_vars_to_remove_from_data), .fns = ~na_if(., .)))
   
   # handling added responses after starting data collection and added responses in the cleaning process-----------------
