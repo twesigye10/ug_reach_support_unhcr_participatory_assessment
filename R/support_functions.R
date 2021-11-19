@@ -521,3 +521,11 @@ data_analysis <- function(input_clean_data_name, input_dap_name, input_vars_for_
                      ".csv"),
               na="")
 }
+
+# function: check indicators for the dap --------------------------------------------------------
+get_indicators_for_dap <- function(input_tool_name) {
+  df_survey <- readxl::read_excel(paste0("inputs/", input_tool_name, ".xlsx"), sheet = "survey")
+  df_survey %>% 
+    filter(str_detect(string = type, pattern = "integer|select_one|select_multiple")) %>% 
+    pull(name)
+}
