@@ -13,33 +13,30 @@ cleaning_log <- function(input_log_name, input_tool_data_name, input_tool_name, 
   
   df_raw_data <- tibble()
   
+  # apply different filters to the data depending on the file name and columns in that file
   if(str_detect(string = input_tool_data_name, pattern = "kampala") ){
     
     if("contact_information_location" %in% colnames(read_tool_data)){
       df_raw_data <- read_tool_data %>% 
         filter(contact_information_location == "kampala")
-    }
-    else{
+    } else{
       df_raw_data <- read_tool_data %>% 
         filter(location == "kampala")
     }
-    
-  }
-  else{
+  } else{
     df_raw_data <- read_tool_data %>% 
       filter(contact_information_location != "kampala")
     
     if("contact_information_location" %in% colnames(read_tool_data)){
       df_raw_data <- read_tool_data %>% 
         filter(contact_information_location != "kampala" )
-    }
-    else{
+    } else{
       df_raw_data <- read_tool_data %>% 
         filter(location != "kampala")
     }
   }
   
-  
+  # tool and choices
   df_survey <- readxl::read_excel(paste0("inputs/", input_tool_name, ".xlsx"), sheet = "survey") 
   df_choices <- readxl::read_excel(paste0("inputs/", input_tool_name, ".xlsx"), sheet = "choices") 
   
