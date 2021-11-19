@@ -10,11 +10,11 @@ vars_for_split_kampala <- c("all")
 
 # quantitative data -------------------------------------------------------
 data_analysis(input_clean_data_name = "clean_data_PA_KI_questionnaire_September_2021",
-             input_dap_name = "PA_KI_questionnaire_September_2021",
+             input_dap_name = "r_dap_phone_survey",
              input_vars_for_split = vars_for_split_general)
 
 data_analysis(input_clean_data_name = "clean_data_PA_KI_questionnaire_October_2021_Kampala",
-             input_dap_name = "PA_KI_questionnaire_October_2021_Kampala",
+             input_dap_name = "r_dap_phone_survey",
              input_vars_for_split = vars_for_split_kampala)
 
 # qualitative data -------------------------------------------------------
