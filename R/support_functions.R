@@ -465,7 +465,7 @@ cleaning_log <- function(input_log_name, input_tool_data_name, input_tool_name, 
 data_analysis <- function(input_clean_data_name, input_dap_name, input_vars_for_split) {
   # load data ---------------------------------------------------------------
   
-  df_cleaned <- read_csv(paste0("outputs/", input_clean_data_name,  ".csv"))
+  df_cleaned <- read_csv(paste0("inputs/", input_clean_data_name,  ".csv"))
   
   dap <- read_csv(paste0("inputs/", input_dap_name,  ".csv")) %>% 
     janitor::clean_names() %>% 
