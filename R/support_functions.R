@@ -517,7 +517,7 @@ data_analysis <- function(input_clean_data_name, input_dap_name, input_vars_for_
     write_csv(paste0("outputs/", 
                      butteR::date_file_prefix(),
                      "_full_analysis_long_format_", 
-                     str_replace(string = input_clean_data_name, pattern = "^\\d{1,8}_", replacement = ""), 
+                     str_replace(string = input_clean_data_name, pattern = "^clean_data_", replacement = ""), 
                      ".csv"),
               na="")
 }
