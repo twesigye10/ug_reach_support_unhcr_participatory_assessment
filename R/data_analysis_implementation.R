@@ -48,9 +48,9 @@ data_analysis(input_clean_data_name = "clean_data_PA_KI_specific_groups_question
 
 # other_minorities --------------------------------------------------------
 data_analysis(input_clean_data_name = "clean_data_PA_KI_other_minorities_questionnaire_October_2021",
-             input_dap_name = "PA_KI_other_minorities_questionnaire_October_2021",
+             input_dap_name = "r_dap_other_minorities",
              input_vars_for_split = vars_for_split_general)
 
 data_analysis(input_clean_data_name = "clean_data_PA_KI_other_minorities_questionnaire_October_2021_Kampala",
-             input_dap_name = "PA_KI_other_minorities_questionnaire_October_2021_Kampala",
+             input_dap_name = "r_dap_other_minorities",
              input_vars_for_split = vars_for_split_kampala)
