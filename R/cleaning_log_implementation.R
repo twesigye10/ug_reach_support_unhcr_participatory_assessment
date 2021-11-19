@@ -2,7 +2,7 @@ library(tidyverse)
 library(lubridate)
 library(glue)
 
-source("R/cleaning_log_function.R")
+source("R/support_functions.R")
 
 vars_to_remove <- c("contact_information_function",	"contact_information_enum_org",	"contact_information__enum_function")
 

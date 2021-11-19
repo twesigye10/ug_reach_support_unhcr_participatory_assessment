@@ -1,6 +1,8 @@
 library(tidyverse)
 library(googlesheets4)
 
+source("R/support_functions.R")
+
 # process dap -------------------------------------------------------
 dap_vars_to_lower <- c("split",	"disaggregation",	"subset_1",	"subset_2")
 
@@ -28,15 +30,6 @@ df_phone_survey_dap <- read_sheet(ss = "1Q-kOf4SppwKRWVvYJ4PJNzRJmFwRsM_S625bkbu
   janitor::clean_names() %>% 
   mutate(across(any_of(dap_vars_to_lower), .fns = ~str_to_lower(string = .))) %>% 
   write_csv(file = "outputs/r_dap_phone_survey.csv", na = "NA")
-
-
-# check indicators --------------------------------------------------------
-get_indicators_for_dap <- function(input_tool_name) {
-  df_survey <- readxl::read_excel(paste0("inputs/", input_tool_name, ".xlsx"), sheet = "survey")
-  df_survey %>% 
-    filter(str_detect(string = type, pattern = "integer|select_one|select_multiple")) %>% 
-    pull(name)
-}
 
 # quantitative data -------------------------------------------------------
 
