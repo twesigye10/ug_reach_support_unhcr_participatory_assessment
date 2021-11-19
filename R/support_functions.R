@@ -468,7 +468,8 @@ data_analysis <- function(input_clean_data_name, input_dap_name, input_vars_for_
   df_cleaned <- read_csv(paste0("outputs/", input_clean_data_name,  ".csv"))
   
   dap <- read_csv(paste0("inputs/", input_dap_name,  ".csv")) %>% 
-    janitor::clean_names()
+    janitor::clean_names() %>% 
+    filter(split %in% input_vars_for_split)
   
   # analysis ----------------------------------------------------------------
   
