@@ -21,11 +21,11 @@ data_analysis(input_clean_data_name = "clean_data_PA_KI_questionnaire_October_20
 
 # host_community ----------------------------------------------------------
 data_analysis(input_clean_data_name = "clean_data_PA_KI_host_community_questionnaire_October_2021",
-             input_dap_name = "PA_KI_host_community_questionnaire_October_2021",
+             input_dap_name = "r_dap_host",
              input_vars_for_split = vars_for_split_general)
 
 data_analysis(input_clean_data_name = "clean_data_PA_KI_host_community_questionnaire_October_2021_Kampala",
-             input_dap_name = "PA_KI_host_community_questionnaire_October_2021_Kampala",
+             input_dap_name = "r_dap_host",
              input_vars_for_split = vars_for_split_kampala)
 
 # key_stakeholders --------------------------------------------------------
