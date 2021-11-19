@@ -1,9 +1,8 @@
 library(tidyverse)
 library(lubridate)
 library(glue)
-source("R/checks_for_other_responses.R")
-source("R/checks_for_quantitative_tools.R")
-source("R/checks_for_qualitative_tools.R")
+
+source("R/support_functions.R")
 
 
 # quantitative data -------------------------------------------------------
