@@ -8,8 +8,37 @@ cleaning_log <- function(input_log_name, input_tool_data_name, input_tool_name, 
     mutate(sheet = NA, index = NA, relevant = NA) %>% 
     select(uuid, type, name, value, issue_id, sheet, index, relevant, issue)
   
-  df_raw_data <- readxl::read_excel(path = paste0("inputs/", input_tool_data_name, ".xlsx"), col_types = c_types) %>% 
+  read_tool_data <- readxl::read_excel(path = paste0("inputs/", input_tool_data_name, ".xlsx"), col_types = c_types) %>% 
     filter(consent == "yes")
+  
+  df_raw_data <- tibble()
+  
+  if(str_detect(string = input_tool_data_name, pattern = "kampala") ){
+    
+    if("contact_information_location" %in% colnames(read_tool_data)){
+      df_raw_data <- read_tool_data %>% 
+        filter(contact_information_location == "kampala")
+    }
+    else{
+      df_raw_data <- read_tool_data %>% 
+        filter(location == "kampala")
+    }
+    
+  }
+  else{
+    df_raw_data <- read_tool_data %>% 
+      filter(contact_information_location != "kampala")
+    
+    if("contact_information_location" %in% colnames(read_tool_data)){
+      df_raw_data <- read_tool_data %>% 
+        filter(contact_information_location != "kampala" )
+    }
+    else{
+      df_raw_data <- read_tool_data %>% 
+        filter(location != "kampala")
+    }
+  }
+  
   
   df_survey <- readxl::read_excel(paste0("inputs/", input_tool_name, ".xlsx"), sheet = "survey") 
   df_choices <- readxl::read_excel(paste0("inputs/", input_tool_name, ".xlsx"), sheet = "choices") 
